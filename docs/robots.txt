@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://godo-logia-coffprog.rf.gd/sitemap.xml
