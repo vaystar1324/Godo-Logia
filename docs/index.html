@@ -186,12 +186,15 @@
             color: white;
         }
 
-        /* Image Gallery */
+        /* Gallery Styles */
+        .gallery-container {
+            margin-top: 40px;
+        }
+
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
-            margin-top: 40px;
         }
 
         .gallery-item {
@@ -199,6 +202,7 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,1);
             transition: transform 0.3s;
+            position: relative;
         }
 
         .gallery-item:hover {
@@ -209,6 +213,176 @@
             width: 100%;
             height: 250px;
             object-fit: cover;
+            display: block;
+        }
+
+        /* Expand Button */
+        .expand-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 20px;
+            margin: 30px 0 20px;
+            background: linear-gradient(135deg, #1e6c93, #2a8bc7);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(30, 108, 147, 0.3);
+        }
+
+        .expand-btn:hover {
+            transform: scale(1.02);
+            background: linear-gradient(135deg, #2a8bc7, #1e6c93);
+            box-shadow: 0 8px 25px rgba(30, 108, 147, 0.5);
+        }
+
+        .expand-btn span {
+            font-size: 32px;
+            transition: transform 0.3s;
+        }
+
+        .expand-btn:hover span {
+            transform: rotate(90deg);
+        }
+
+        /* Expanded Content */
+        .expanded-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            margin-top: 20px;
+        }
+
+        .expanded-content.show {
+            max-height: 2000px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .media-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .media-section h3 {
+            color: #1e6c93;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #1e6c93;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .video-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            background: #ddd;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .video-thumbnail:hover img {
+            transform: scale(1.05);
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(30, 108, 147, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .video-thumbnail:hover .play-button {
+            background: #f80;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .video-info {
+            padding: 15px;
+        }
+
+        .video-info h4 {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .video-info p {
+            color: #666;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .extra-photos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .extra-photo {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .extra-photo:hover {
+            transform: translateY(-5px);
+        }
+
+        .extra-photo img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .extra-photo p {
+            padding: 10px;
+            text-align: center;
+            background: white;
+            margin: 0;
+            font-weight: 500;
+            color: #1e6c93;
         }
 
         /* FAQ Section */
@@ -289,6 +463,11 @@
                 flex-direction: column;
                 gap: 15px;
             }
+            
+            .expand-btn {
+                font-size: 20px;
+                padding: 15px;
+            }
         }
     </style>
 </head>
@@ -330,18 +509,99 @@
         <!-- Media Section -->
         <section id="media">
             <h2>Официальный контент</h2>
-            <div class="gallery">
-                <div class="gallery-item">
-                    <img src="photos/photo1.png" alt="Игровой процесс">
+            <div class="gallery-container">
+                <!-- Main Gallery with 3 photos -->
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="photos/photo1.png" alt="Игровой процесс 1">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="photos/photo2.png" alt="Игровой процесс 2">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="photos/photo3.png" alt="Игровой процесс 3">
+                    </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="photos/photo2.png" alt="Игровой процесс">
+
+                <!-- Expand Button -->
+                <button class="expand-btn" onclick="toggleGallery()">
+                    <span>+</span>
+                    <span id="expandText">Показать больше контента</span>
+                </button>
+
+                <!-- Expanded Content -->
+                <div id="expandedContent" class="expanded-content">
+                    <!-- Additional Photos -->
+                    <div class="media-section">
+                        <h3>Дополнительные скриншоты</h3>
+                        <div class="extra-photos">
+                            <div class="extra-photo">
+                                <img src="photos/photo4.png" alt="Дополнительный скриншот 1" onerror="this.src='https://via.placeholder.com/300x200?text=Photo+4'">
+                                <p>Концепт арт локации</p>
+                            </div>
+                            <div class="extra-photo">
+                                <img src="photos/photo5.png" alt="Дополнительный скриншот 2" onerror="this.src='https://via.placeholder.com/300x200?text=Photo+5'">
+                                <p>Дизайн персонажей</p>
+                            </div>
+                            <div class="extra-photo">
+                                <img src="photos/photo6.png" alt="Дополнительный скриншот 3" onerror="this.src='https://via.placeholder.com/300x200?text=Photo+6'">
+                                <p>Игровой интерфейс</p>
+                            </div>
+                            <div class="extra-photo">
+                                <img src="photos/photo7.png" alt="Дополнительный скриншот 4" onerror="this.src='https://via.placeholder.com/300x200?text=Photo+7'">
+                                <p>Босс-арена</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Video Section -->
+                    <div class="media-section">
+                        <h3>Видео материалы</h3>
+                        <div class="video-grid">
+                            <div class="video-item">
+                                <div class="video-thumbnail" onclick="playVideo('dQw4w9WgXcQ')">
+                                    <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" alt="Трейлер игры" onerror="this.src='https://via.placeholder.com/320x180?text=Trailer'">
+                                    <div class="play-button">▶</div>
+                                </div>
+                                <div class="video-info">
+                                    <h4>Официальный трейлер</h4>
+                                    <p>Первый геймплейный трейлер Godo-Logia</p>
+                                </div>
+                            </div>
+                            <div class="video-item">
+                                <div class="video-thumbnail" onclick="playVideo('dQw4w9WgXcQ')">
+                                    <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" alt="Геймплей" onerror="this.src='https://via.placeholder.com/320x180?text=Gameplay'">
+                                    <div class="play-button">▶</div>
+                                </div>
+                                <div class="video-info">
+                                    <h4>Геймплей: Первые 10 минут</h4>
+                                    <p>Прохождение начальной локации</p>
+                                </div>
+                            </div>
+                            <div class="video-item">
+                                <div class="video-thumbnail" onclick="playVideo('dQw4w9WgXcQ')">
+                                    <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" alt="Разработка" onerror="this.src='https://via.placeholder.com/320x180?text=Devlog'">
+                                    <div class="play-button">▶</div>
+                                </div>
+                                <div class="video-info">
+                                    <h4>Дневник разработки #1</h4>
+                                    <p>Как создается Godo-Logia</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coming Soon Section -->
+                    <div class="media-section" style="text-align: center;">
+                        <p style="font-style: italic; color: #666;">
+                            ✨ В разработке появятся новые скриншоты, видео заставки и обучающие материалы! 
+                            Следите за обновлениями в нашем Telegram канале!
+                        </p>
+                    </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="photos/photo3.png" alt="Игровой процесс">
-                </div>
+
+                <p style="text-align: center; margin-top: 20px;"><em>Контента пока что здесь мало, но в дальнейшем по разработке игры появится больше фотографий и видео!</em></p>
             </div>
-            <p style="text-align: center; margin-top: 20px;"><em>Контента пока что здесь мало, но в дальнейшем по разработке игры появится больше фотографий и видео!</em></p>
         </section>
 
         <!-- Download Section -->
@@ -402,6 +662,32 @@
     </footer>
 
     <script>
+        // Gallery Toggle Function
+        function toggleGallery() {
+            const expandedContent = document.getElementById('expandedContent');
+            const expandBtn = document.querySelector('.expand-btn span:last-child');
+            const plusIcon = document.querySelector('.expand-btn span:first-child');
+            
+            expandedContent.classList.toggle('show');
+            
+            if (expandedContent.classList.contains('show')) {
+                expandBtn.textContent = 'Скрыть дополнительный контент';
+                plusIcon.textContent = '−';
+                plusIcon.style.transform = 'rotate(90deg)';
+            } else {
+                expandBtn.textContent = 'Показать больше контента';
+                plusIcon.textContent = '+';
+                plusIcon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Video Play Function
+        function playVideo(videoId) {
+            // Здесь можно добавить логику для открытия видео
+            // Например, открыть в модальном окне или новой вкладке
+            window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
+        }
+
         // FAQ Toggle Function
         function toggleFAQ(element) {
             const answer = element.nextElementSibling;
@@ -430,18 +716,12 @@
             });
         });
 
-        // Simple image carousel (you can enhance this)
-        let currentImage = 0;
-        const images = document.querySelectorAll('.gallery-item img');
-        
-        function rotateImages() {
-            images.forEach(img => img.style.opacity = '0.7');
-            images[currentImage].style.opacity = '1';
-            currentImage = (currentImage + 1) % images.length;
-        }
-        
-        // Start image rotation every 3 seconds
-        setInterval(rotateImages, 3000);
+        // Fallback images handling
+        document.querySelectorAll('img').forEach(img => {
+            img.onerror = function() {
+                this.src = 'https://via.placeholder.com/300x200?text=Image+Not+Found';
+            };
+        });
     </script>
 </body>
 </html>
