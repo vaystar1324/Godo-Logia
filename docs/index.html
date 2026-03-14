@@ -385,6 +385,59 @@
             color: #1e6c93;
         }
 
+        /* System Requirements Styles */
+        .specs-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .specs-column {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .specs-column h3 {
+            color: #1e6c93;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #1e6c93;
+        }
+
+        .spec-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .spec-item strong {
+            color: #1e6c93;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .spec-item p {
+            margin: 0;
+            color: #666;
+        }
+
+        .additional-info {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f0f7;
+            border-radius: 10px;
+        }
+
         /* FAQ Section */
         .faq-item {
             margin-bottom: 20px;
@@ -459,6 +512,10 @@
                 grid-template-columns: 1fr;
             }
             
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+            
             .footer-links {
                 flex-direction: column;
                 gap: 15px;
@@ -489,6 +546,7 @@
             <ul class="nav-links">
                 <li><a href="#about">О игре</a></li>
                 <li><a href="#media">Медиа</a></li>
+                <li><a href="#system">Системные требования</a></li>
                 <li><a href="#download">Скачать</a></li>
                 <li><a href="#faq">Вопросы и ответы</a></li>
             </ul>
@@ -602,6 +660,73 @@
             </div>
         </section>
 
+        <!-- System Requirements Section -->
+        <section id="system">
+            <h2>Системные требования</h2>
+            <div class="specs-container">
+                <div class="specs-grid">
+                    <!-- Minimum Requirements -->
+                    <div class="specs-column">
+                        <h3>Минимальные требования</h3>
+                        <div class="spec-item">
+                            <strong>Процессор:</strong>
+                            <p>Intel Core i3-2100 или новее<br>AMD FX-4300 или Athlon X4</p>
+                        </div>
+                        <div class="spec-item">
+                            <strong>Оперативная память:</strong>
+                            <p>512 MiB</p>
+                        </div>
+                        <div class="spec-item">
+                            <strong>Видеокарта:</strong>
+                            <p>512 MiB видеопамяти<br>Поддержка OpenGL 3.3 или DirectX 11</p>
+                        </div>
+                        <div class="spec-item">
+                            <strong>Место на диске:</strong>
+                            <p>128 MiB свободного пространства</p>
+                        </div>
+                        <div class="spec-item">
+                            <strong>Операционная система:</strong>
+                            <p>Windows 7/8/10/11<br>Linux (любой дистрибутив)<br>macOS 10.13+</p>
+                        </div>
+                    </div>
+
+                    <!-- Recommended Requirements -->
+                    <div class="specs-column">
+                        <h3>Рекомендуемые требования</h3>
+                        <div class="spec-item">
+                            <strong>Процессор:</strong>
+                            <p>Intel Core i5-4460 или новее<br>AMD Ryzen 3 1200</p>
+                        </div>
+                        <div class="spec-item">
+                            <strong>Оперативная память:</strong>
+                            <p>1 GiB</p>
+                        </div>
+                        <div class="spec-item">
+                            <strong>Видеокарта:</strong>
+                            <p>1 GiB видеопамяти<br>NVIDIA GeForce GTX 660 / AMD Radeon R7 370</p>
+                        </div>
+                        <div class="spec-item">
+                            <strong>Место на диске:</strong>
+                            <p>256 MiB свободного пространства</p>
+                        </div>
+                        <div class="spec-item">
+                            <strong>Операционная система:</strong>
+                            <p>Windows 10/11<br>Linux (последние версии)<br>macOS 11+</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Information -->
+                <div class="additional-info">
+                    <h3 style="color: #1e6c93; margin-bottom: 15px;">Дополнительная информация</h3>
+                    <p>✅ Игра работает на движке Godot Engine, что обеспечивает отличную оптимизацию и поддержку различных платформ.</p>
+                    <p>✅ Поддерживаются все современные операционные системы включая Windows, Linux и macOS.</p>
+                    <p>✅ Для комфортной игры рекомендуется закрыть все фоновые приложения.</p>
+                    <p>⚠️ Требования могут измениться в процессе разработки. Следите за обновлениями!</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Download Section -->
         <section id="download" class="section-dark">
             <h2>Где можно скачать и посмотреть игру?</h2>
@@ -612,12 +737,6 @@
                     <a href="https://t.me/GodoLogia_CoffProg" class="btn btn-outline" target="_blank">Телеграмм канал</a>
                     <a href="https://www.youtube.com/@Vaystar1324" class="btn btn-outline" target="_blank">Ютуб канал</a>
                     <a href="https://drive.google.com/drive/folders/12Htn5yxkVbiw356c3RlS7cS5LpQTO_Dt?usp=sharing" class="btn btn-outline">Скачать игру</a>
-
-				<p>Системные требования:</p>
-					<p>Intel: Core i3-2100 или новее. AMD: FX-4300 или Athlon X4.</p>
-					<p>Видеопамять 512 MiB.</p>
-					<p>Оперативная память 512 MiB.</p>
-					<p>Свободной памяти 128 MiB.</p>
                 </div>
             </div>
         </section>
@@ -647,6 +766,26 @@
                         <p>Создание визуального или текстового контента по игре не запрещается, если упоминается название или создатели игры!</p>
                     </div>
                 </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        На каких платформах будет доступна игра?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Игра разрабатывается для Windows, Linux и macOS. В будущем возможно появление версий для других платформ.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Будет ли игра распространяться платно?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Нет, игра остается полностью бесплатной. Мы верим в доступность игр для всех!</p>
+                    </div>
+                </div>
             </div>
         </section>
     </div>
@@ -657,6 +796,7 @@
             <div class="footer-links">
                 <a href="https://t.me/GodoLogia_CoffProg" target="_blank">Телеграмм</a>
                 <a href="https://www.youtube.com/@Vaystar1324" target="_blank">YouTube</a>
+                <a href="#system">Системные требования</a>
             </div>
             <p>2025 Godo-Logia. Игровая студия CoffProg.</p>
             <div class="copyright">
@@ -687,8 +827,6 @@
 
         // Video Play Function
         function playVideo(videoId) {
-            // Здесь можно добавить логику для открытия видео
-            // Например, открыть в модальном окне или новой вкладке
             window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
         }
 
