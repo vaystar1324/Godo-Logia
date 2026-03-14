@@ -5,7 +5,7 @@
     <meta name="yandex-verification" content="8ca8f321a1135ce7" />
     <link rel="icon" href="icon.png" type="image/png">
     <meta name="description" content="сайт по игре Godo-Logia от студии CoffProg">
-	<meta name="keywords" content="Godo-Logia, CoffProg, Godot game, Tower defence">
+    <meta name="keywords" content="Godo-Logia, CoffProg, Godot game, Tower defence">
     <title>Godo-Logia - Игровая студия CoffProg</title>
     <style>
         * {
@@ -29,8 +29,8 @@
 
         /* Header Styles */
         header {
-    		background: linear-gradient(rgba(30, 108, 147, 0.7), rgba(34, 110, 147, 0.7)), 
-                		url("photos/logo.png") center/cover no-repeat;
+            background: linear-gradient(rgba(30, 108, 147, 0.7), rgba(34, 110, 147, 0.7)), 
+                        url("photos/logo.png") center/cover no-repeat;
             color: white;
             padding: 80px 0;
             text-align: center;
@@ -116,16 +116,17 @@
         }
 
         /* Section Styles */
-	.content {
-    	    padding: 40px 50px;
-    	    line-height: 1.8;
-    	    font-size: 17px;
-	}
+        .content {
+            padding: 40px 50px;
+            line-height: 1.8;
+            font-size: 17px;
+        }
+        
         section {
-	    padding: 70px 0;
-	    margin: 40px auto;
-	    max-width: 1200px;
-	    border-radius: 15px;
+            padding: 70px 0;
+            margin: 40px auto;
+            max-width: 1200px;
+            border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
@@ -135,9 +136,9 @@
         }
 
         h2 {
-	    margin-bottom: 50px;
-    	    padding: 0 30px;
-    	    font-size: 38px;
+            margin-bottom: 50px;
+            padding: 0 30px;
+            font-size: 38px;
         }
 
         .section-dark h2 {
@@ -294,7 +295,7 @@
         .video-thumbnail {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            padding-bottom: 56.25%;
             background: #ddd;
             cursor: pointer;
             overflow: hidden;
@@ -438,6 +439,75 @@
             border-radius: 10px;
         }
 
+        /* Modal Styles - I moved these outside the media query */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 50px auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 1000px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #1e6c93;
+            text-decoration: none;
+        }
+
+        .modal h2 {
+            margin-top: 0;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        .modal .specs-container {
+            margin-top: 0;
+        }
+
         /* FAQ Section */
         .faq-item {
             margin-bottom: 20px;
@@ -479,6 +549,7 @@
             justify-content: center;
             gap: 30px;
             margin-bottom: 30px;
+            flex-wrap: wrap;
         }
 
         .footer-links a {
@@ -525,73 +596,6 @@
                 font-size: 20px;
                 padding: 15px;
             }
-			.modal {
-    		display: none;
-   			position: fixed;
-    		z-index: 2000;
-    		left: 0;
-    		top: 0;
-    		width: 100%;
-    		height: 100%;
-    		overflow: auto;
-    		background-color: rgba(0,0,0,0.5);
-    		animation: fadeIn 0.3s;
-			}
-
-			@keyframes fadeIn {
-    			from {opacity: 0;}
-    			to {opacity: 1;}
-			}
-
-			.modal-content {
-    		background-color: #fefefe;
-    		margin: 50px auto;
-    		padding: 30px;
-    		border: 1px solid #888;
-    		width: 90%;
-    		max-width: 1000px;
-    		border-radius: 15px;
-    		box-shadow: 0 5px 30px rgba(0,0,0,0.3);
-    		animation: slideIn 0.3s;
-    		max-height: 80vh;
-    		overflow-y: auto;
-			}
-
-			@keyframes slideIn {
-    			from {
-        			transform: translateY(-50px);
-        			opacity: 0;
-    				}
-    			to {
-        			transform: translateY(0);
-        			opacity: 1;
-    				}
-			}
-
-			.close-modal {
-    		color: #aaa;
-    		float: right;
-    		font-size: 28px;
-    		font-weight: bold;
-    		cursor: pointer;
-    		transition: color 0.3s;
-			}
-
-			.close-modal:hover,
-			.close-modal:focus {
-    		color: #1e6c93;
-    		text-decoration: none;
-			}
-
-			.modal h2 {
-    			margin-top: 0;
-    			padding: 0;
-    			margin-bottom: 30px;
-			}
-
-			.modal .specs-container {
-    			margin-top: 0;
-			}
         }
     </style>
 </head>
@@ -613,7 +617,7 @@
             <ul class="nav-links">
                 <li><a href="#about">О игре</a></li>
                 <li><a href="#media">Медиа</a></li>
-                 <li><a href="#" onclick="showSystemSpecs(); return false;">Системные требования</a></li>
+                <li><a href="#" onclick="showSystemSpecs(); return false;">Системные требования</a></li>
                 <li><a href="#download">Скачать</a></li>
                 <li><a href="#faq">Вопросы и ответы</a></li>
             </ul>
@@ -726,84 +730,8 @@
                 </div>
             </div>
         </section>
-
-                </section>
-    </div>
-
-    <!-- Modal for System Requirements -->
-    <div id="systemModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h2>Системные требования</h2>
-            <div class="specs-container">
-                <div class="specs-grid">
-                    <!-- Minimum Requirements -->
-                    <div class="specs-column">
-                        <h3>Минимальные требования</h3>
-                        <div class="spec-item">
-                            <strong>Процессор:</strong>
-                            <p>Intel Core i3-2100 или новее<br>AMD FX-4300 или Athlon X4</p>
-                        </div>
-                        <div class="spec-item">
-                            <strong>Оперативная память:</strong>
-                            <p>512 MiB</p>
-                        </div>
-                        <div class="spec-item">
-                            <strong>Видеокарта:</strong>
-                            <p>512 MiB видеопамяти<br>Поддержка OpenGL 3.3 или DirectX 11</p>
-                        </div>
-                        <div class="spec-item">
-                            <strong>Место на диске:</strong>
-                            <p>128 MiB свободного пространства</p>
-                        </div>
-                        <div class="spec-item">
-                            <strong>Операционная система:</strong>
-                            <p>Windows 7/8/10/11<br>Android 5</p>
-                        </div>
-                    </div>
-
-                    <!-- Recommended Requirements -->
-                    <div class="specs-column">
-                        <h3>Рекомендуемые требования</h3>
-                        <div class="spec-item">
-                            <strong>Процессор:</strong>
-                            <p>Intel Core i5-4460 или новее<br>AMD Ryzen 3 1200</p>
-                        </div>
-                        <div class="spec-item">
-                            <strong>Оперативная память:</strong>
-                            <p>1 GiB</p>
-                        </div>
-                        <div class="spec-item">
-                            <strong>Видеокарта:</strong>
-                            <p>1 GiB видеопамяти<br>NVIDIA GeForce GTX 660 / AMD Radeon R7 370</p>
-                        </div>
-                        <div class="spec-item">
-                            <strong>Место на диске:</strong>
-                            <p>256 MiB свободного пространства</p>
-                        </div>
-                        <div class="spec-item">
-                            <strong>Операционная система:</strong>
-                            <p>Windows 10/11<br>Android 5</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Additional Information -->
-                <div class="additional-info">
-                    <h3 style="color: #1e6c93; margin-bottom: 15px;">Дополнительная информация</h3>
-                    <p>✅ Игра работает на движке Godot Engine, что обеспечивает отличную оптимизацию и поддержку различных платформ.</p>
-                    <p>✅ Поддерживается на популярных операционные системах включая Windows, Android.</p>
-                    <p>✅ Для комфортной игры рекомендуется закрыть все фоновые приложения.</p>
-                    <p>⚠️ Требования могут измениться в процессе разработки. Следите за обновлениями!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-
-        <!-- Download Section -->
+        
+        <!-- Download Section - Moved here -->
         <section id="download" class="section-dark">
             <h2>Где можно скачать и посмотреть игру?</h2>
             <div class="content">
@@ -849,7 +777,7 @@
                         <span>+</span>
                     </div>
                     <div class="faq-answer">
-                        <p>Игра разрабатывается для Windows, Linux и macOS. В будущем возможно появление версий для других платформ.</p>
+                        <p>Игра разрабатывается для Windows, Android. В будущем возможно появление версий для других платформ.</p>
                     </div>
                 </div>
 
@@ -866,13 +794,83 @@
         </section>
     </div>
 
+    <!-- Modal for System Requirements -->
+    <div id="systemModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2>Системные требования</h2>
+            <div class="specs-container">
+                <div class="specs-grid">
+                    <!-- Minimum Requirements -->
+                    <div class="specs-column">
+                        <h3>Минимальные требования</h3>
+                        <div class="spec-item">
+                            <strong>Процессор:</strong>
+                            <p>Intel Core i3-2100 или новее<br>AMD FX-4300 или Athlon X4</p>
+                        </div>
+                        <div class="spec-item">
+                            <strong>Оперативная память:</strong>
+                            <p>512 MiB</p>
+                        </div>
+                        <div class="spec-item">
+                            <strong>Видеокарта:</strong>
+                            <p>512 MiB видеопамяти<br>Поддержка OpenGL 3.3 или DirectX 11</p>
+                        </div>
+                        <div class="spec-item">
+                            <strong>Место на диске:</strong>
+                            <p>128 MiB свободного пространства</p>
+                        </div>
+                        <div class="spec-item">
+                            <strong>Операционная система:</strong>
+                            <p>Windows 7/8/10/11<br>Android 5+</p>
+                        </div>
+                    </div>
+
+                    <!-- Recommended Requirements -->
+                    <div class="specs-column">
+                        <h3>Рекомендуемые требования</h3>
+                        <div class="spec-item">
+                            <strong>Процессор:</strong>
+                            <p>Intel Core i5-4460 или новее<br>AMD Ryzen 3 1200</p>
+                        </div>
+                        <div class="spec-item">
+                            <strong>Оперативная память:</strong>
+                            <p>1 GiB</p>
+                        </div>
+                        <div class="spec-item">
+                            <strong>Видеокарта:</strong>
+                            <p>1 GiB видеопамяти<br>NVIDIA GeForce GTX 660 / AMD Radeon R7 370</p>
+                        </div>
+                        <div class="spec-item">
+                            <strong>Место на диске:</strong>
+                            <p>256 MiB свободного пространства</p>
+                        </div>
+                        <div class="spec-item">
+                            <strong>Операционная система:</strong>
+                            <p>Windows 10/11<br>Android 10+</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Information -->
+                <div class="additional-info">
+                    <h3 style="color: #1e6c93; margin-bottom: 15px;">Дополнительная информация</h3>
+                    <p>✅ Игра работает на движке Godot Engine, что обеспечивает отличную оптимизацию и поддержку различных платформ.</p>
+                    <p>✅ Поддерживается на популярных операционных системах включая Windows и Android.</p>
+                    <p>✅ Для комфортной игры рекомендуется закрыть все фоновые приложения.</p>
+                    <p>⚠️ Требования могут измениться в процессе разработки. Следите за обновлениями!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-links">
                 <a href="https://t.me/GodoLogia_CoffProg" target="_blank">Телеграмм</a>
                 <a href="https://www.youtube.com/@Vaystar1324" target="_blank">YouTube</a>
-                <a href="#system">Системные требования</a>
+                <a href="#" onclick="showSystemSpecs(); return false;">Системные требования</a>
             </div>
             <p>2025 Godo-Logia. Игровая студия CoffProg.</p>
             <div class="copyright">
@@ -941,8 +939,7 @@
             };
         });
 
-
-		// Modal Functions
+        // Modal Functions
         function showSystemSpecs() {
             document.getElementById('systemModal').style.display = 'block';
             document.body.style.overflow = 'hidden'; // Prevent scrolling
