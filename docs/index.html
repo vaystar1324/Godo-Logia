@@ -161,30 +161,39 @@
         .btn {
             display: inline-block;
             padding: 12px 30px;
-            background: #1e6c93;
-            color: white;
+            /* Всегда оранжевый фон */
+            background: #f80; 
+            /* Всегда белый текст */
+            color: white; 
             text-decoration: none;
             border-radius: 5px;
-            border: 2px solid #1e6c93;
+            /* Всегда синяя рамка */
+            border: 2px solid #1e6c93; 
             transition: all 0.3s;
             font-weight: 500;
             margin: 10px;
+            cursor: pointer;
         }
 
         .btn:hover {
-            background: transparent;
-            color: #f90;
+            /* При наведении делаем фон чуть светлее или прозрачнее, 
+               но рамка (#1e6c93) останется на месте, так как она прописана в .btn */
+            background: #f90; 
+            color: white;
         }
 
+        /* Стили для btn-outline, если вы хотите, чтобы она тоже была оранжевой */
         .btn-outline {
-            background: transparent;
-            color: #f80;
+            background: #f80;
+            color: white;
             border: 2px solid #1e6c93;
         }
 
         .btn-outline:hover {
-            background: #f80;
+            background: #f90;
             color: white;
+            /* Рамка не пропадёт, так как она наследуется из .btn или явно указана здесь */
+            border: 2px solid #1e6c93; 
         }
 
         /* Gallery Styles */
