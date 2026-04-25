@@ -4,7 +4,7 @@
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '1776489709|1811757043';
+const CACHE_VERSION = '1777111496|12522401013';
 /** @type {string} */
 const CACHE_PREFIX = 'GodoLogia-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;
