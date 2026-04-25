@@ -741,35 +741,6 @@
             </div>
         </section>
 
-
-    <!-- Виджет Telegram -->
-    <div class="telegram-widget">
-        <div class="telegram-header">
-            <span>📢 Последнее из канала</span>
-        </div>
-        <div class="telegram-posts" id="telegramPosts">
-            <div class="loading">Загрузка постов...</div>
-        </div>
-    </div>
-
-    <!-- Подключаем JavaScript модули -->
-    <script src="js/api.js"></script>
-    <script src="js/widget.js"></script>
-    
-    <!-- Запускаем виджет -->
-    <script>
-        // Настройки (можно менять без правки core-файлов)
-        const CONFIG = {
-            channelUsername: "GodoLogia_CoffProg",
-            postsLimit: 10,
-            apiProxy: "https://tg-bot-api.l1v2.ru"
-        };
-        
-        // Инициализация виджета
-        initTelegramWidget(CONFIG);
-    </script>
-
-
         
         <!-- Download Section - Moved here -->
         <section id="download" class="section-dark">
@@ -1014,6 +985,40 @@
                 closeModal();
             }
         });
+
+
+// Вставьте это в ваш основной JS файл на GitHub
+async function fetchTelegramMessages() {
+    const channelName = 'GodoLogia_CoffProg'; // без @
+    // Используем rss2json как бесплатный мост для получения данных
+    const rssUrl = `https://rss2json.com{channelName}`;
+
+    try {
+        const response = await fetch(rssUrl);
+        const data = await response.json();
+
+        if (data.status === 'ok') {
+            const container = document.getElementById('telegram-feed');
+            // Берем последние 10 сообщений
+            const items = data.items.slice(0, 10); 
+            
+            container.innerHTML = items.map(item => `
+                <div class="message-card">
+                    <small>${new Date(item.pubDate).toLocaleDateString()}</small>
+                    <p>${item.content.replace(/<[^>]*>/g, '').substring(0, 150)}...</p>
+                    <a href="${item.link}" target="_blank">Читать далее</a>
+                </div>
+            `).join('');
+        }
+    } catch (error) {
+        console.error('Ошибка получения сообщений:', error);
+    }
+}
+
+fetchTelegramMessages();
+
+
+
     </script>
 </body>
 </html>
