@@ -739,6 +739,36 @@
                 </div>
             </div>
         </section>
+
+
+    <!-- Виджет Telegram -->
+    <div class="telegram-widget">
+        <div class="telegram-header">
+            <span>📢 Последнее из канала</span>
+        </div>
+        <div class="telegram-posts" id="telegramPosts">
+            <div class="loading">Загрузка постов...</div>
+        </div>
+    </div>
+
+    <!-- Подключаем JavaScript модули -->
+    <script src="js/api.js"></script>
+    <script src="js/widget.js"></script>
+    
+    <!-- Запускаем виджет -->
+    <script>
+        // Настройки (можно менять без правки core-файлов)
+        const CONFIG = {
+            channelUsername: "GodoLogia_CoffProg",
+            postsLimit: 10,
+            apiProxy: "https://tg.i-c-a.su/json"
+        };
+        
+        // Инициализация виджета
+        initTelegramWidget(CONFIG);
+    </script>
+
+
         
         <!-- Download Section - Moved here -->
         <section id="download" class="section-dark">
