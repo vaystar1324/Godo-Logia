@@ -7,11 +7,7 @@ function initTelegramWidget(config) {
         container.innerHTML = '<div class="loading">📡 Загружаем...</div>';
         
         try {
-            const messages = await TelegramAPI.getPosts(
-                config.channelUsername,
-                config.postsLimit,
-                config.apiProxy
-            );
+            const messages = await TelegramAPI.getPosts(config.postsLimit)
             
             if (!messages || messages.length === 0) {
                 container.innerHTML = '<div class="error">Нет постов в канале</div>';

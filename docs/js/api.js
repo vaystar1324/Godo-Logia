@@ -1,33 +1,22 @@
-// Модуль для работы с Telegram API
 const TelegramAPI = (function() {
+    const BOT_TOKEN = "8631872058:AAGjX8NUvmC-fCUzlGqmy0DI1lqazWyIZEo";     // Вставьте сюда
+    const CHANNEL_ID = -1002811478594;      // ID канала с минусом
     
-    async function fetchChannelPosts(channelUsername, limit, proxyUrl) {
-        const url = `${proxyUrl}/channels.getMessages?channel=@${channelUsername}&limit=${limit}`;
+    async function fetchChannelPosts(limit) {
+        const url = `https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?limit=${limit}`;
         const response = await fetch(url);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
         const data = await response.json();
         
-        if (!data.ok || !data.result || !data.result.messages) {
-            throw new Error('Invalid API response');
-        }
+        if (!data.ok) throw new Error('API error');
         
-        return data.result.messages;
+        // Фильтруем сообщения только из вашего канала
+        const messages = data.result
+            .filter(update => update.channel_post && update.channel_post.chat.id === CHANNEL_ID)
+            .map(update => update.channel_post)
+            .slice(0, limit);
+        
+        return messages;
     }
     
-    async function fetchMediaFile(fileId, proxyUrl) {
-        // Функция для загрузки медиа (опционально)
-        const url = `${proxyUrl}/getFile?file_id=${fileId}`;
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Media fetch failed');
-        return response.json();
-    }
-    
-    return {
-        getPosts: fetchChannelPosts,
-        getMedia: fetchMediaFile
-    };
+    return { getPosts: fetchChannelPosts };
 })();
