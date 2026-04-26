@@ -662,54 +662,6 @@
                 </div>
 
 
-        <script>
-            // Настройки
-            const username = 'vaystar1324'; 
-            const repo = 'Godo-Logia';
-            const folderPath = 'docs/photos'; // Путь с учетом папки docs
-            async function loadGallery() {
-                const gallery = document.getElementById('gallery');
-                const url = `https://api.github.com/repos/${username}/${repo}/contents/${folderPath}`;
-
-                try {
-                    const response = await fetch(url);
-                    const files = await response.json();
-
-                    const images = files.filter(file => 
-                        file.name.match(/\.(jpe?g|png|gif|webp)$/i)
-                    );
-
-                    // Очищаем галерею перед загрузкой (на всякий случай)
-                    gallery.innerHTML = '';
-
-                    images.forEach(img => {
-                        // 1. Создаем контейнер для фото и подписи
-                        const card = document.createElement('div');
-                        card.className = 'photo-card';
-
-                    // 2. Создаем само изображение
-                        const imgElement = document.createElement('img');
-                        imgElement.src = img.download_url;
-                        imgElement.alt = img.name;
-
-                        // 3. Создаем подпись (берем имя файла и убираем расширение)
-                        const caption = document.createElement('p');
-                        caption.className = 'photo-caption';
-                        caption.innerText = img.name.replace(/\.[^/.]+$/, ""); // Убирает .jpg, .png и т.д.
-
-                        // 4. Собираем всё вместе
-                        card.appendChild(imgElement);
-                        card.appendChild(caption);
-                        gallery.appendChild(card);
-                    });
-                } catch (error) {
-                    console.error('Ошибка загрузки:', error);
-                }
-            }
-
-            loadGallery();
-        </script>
-
 
 
 
@@ -1036,6 +988,54 @@
                 closeModal();
             }
         });
+
+
+        // Настройки
+        const username = 'vaystar1324'; 
+        const repo = 'Godo-Logia';
+        const folderPath = 'docs/photos'; // Путь с учетом папки docs
+        async function loadGallery() {
+            const gallery = document.getElementById('gallery');
+            const url = `https://api.github.com/repos/${username}/${repo}/contents/${folderPath}`;
+
+            try {
+                const response = await fetch(url);
+                const files = await response.json();
+
+                const images = files.filter(file => 
+                    file.name.match(/\.(jpe?g|png|gif|webp)$/i)
+                );
+
+                    // Очищаем галерею перед загрузкой (на всякий случай)
+                gallery.innerHTML = '';
+
+                images.forEach(img => {
+                    // 1. Создаем контейнер для фото и подписи
+                    const card = document.createElement('div');
+                    card.className = 'photo-card';
+
+                    // 2. Создаем само изображение
+                    const imgElement = document.createElement('img');
+                    imgElement.src = img.download_url;
+                    imgElement.alt = img.name;
+
+                    // 3. Создаем подпись (берем имя файла и убираем расширение)
+                    const caption = document.createElement('p');
+                    caption.className = 'photo-caption';
+                    caption.innerText = img.name.replace(/\.[^/.]+$/, ""); // Убирает .jpg, .png и т.д.
+
+                    // 4. Собираем всё вместе
+                    card.appendChild(imgElement);
+                    card.appendChild(caption);
+                    gallery.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Ошибка загрузки:', error);
+            }
+        }
+
+        loadGallery();
+
 
 
     </script>
