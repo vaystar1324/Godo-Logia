@@ -1032,28 +1032,24 @@
 
                 gallery.innerHTML = '';
 
-                images.forEach(file => {
-                    const card = document.createElement('div');
-                    card.className = 'photo-card';
+            images.forEach(file => {
+                // Создаём ТОЧНО такой же элемент как статические
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
 
-                    const img = document.createElement('img');
-                    img.src = file.download_url;
-                    img.alt = file.name;
-                    img.loading = 'lazy'; // Ленивая загрузка
+                const img = document.createElement('img');
+                img.src = file.download_url;
+                img.alt = file.name;
+                img.loading = 'lazy';
 
-                    // Свой fallback для изображений галереи
-                    img.addEventListener('error', function() {
-                        this.src = 'https://via.placeholder.com/300x200?text=Load+Error';
-                    });
+                // Подпись из имени файла без расширения
+                const caption = document.createElement('p');
+                caption.textContent = file.name.replace(/\.[^/.]+$/, '');
 
-                    const caption = document.createElement('p');
-                    caption.className = 'photo-caption';
-                    caption.textContent = file.name.replace(/\.[^/.]+$/, '');
-
-                    card.appendChild(img);
-                    card.appendChild(caption);
-                    gallery.appendChild(card);
-                });
+                galleryItem.appendChild(img);
+                galleryItem.appendChild(caption);
+                gallery.appendChild(galleryItem);
+            });
 
                 console.log(`Загружено ${images.length} изображений из GitHub`);
                 
