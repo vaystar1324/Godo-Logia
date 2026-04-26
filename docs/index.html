@@ -670,7 +670,7 @@
             const folderPath = 'docs/photos'; // Путь с учетом папки docs
             async function loadGallery() {
                 const gallery = document.getElementById('gallery');
-                const url = `https://github.com{username}/${repo}/contents/${folderPath}`;
+                const url = `https://api.github.com/repos/${username}/${repo}/contents/${folderPath}`;
 
                 try {
                     const response = await fetch(url);
