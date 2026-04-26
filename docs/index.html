@@ -1038,11 +1038,10 @@
     // 7. DYNAMIC GALLERY (Загрузка из GitHub)
     // ==========================================
         (async function loadGallery() {
-            const gallery = document.getElementById('dynamic-gallery');
-        
-            // Если контейнера нет — выходим без ошибки
-            if (!gallery) {
-                console.warn('Контейнер #dynamic-gallery не найден. Пропускаем загрузку.');
+            const container = document.getElementById('dynamic-gallery');
+            
+            if (!container) {
+                console.warn('Контейнер #dynamic-gallery не найден.');
                 return;
             }
 
@@ -1053,58 +1052,62 @@
 
             try {
                 const response = await fetch(url);
-            
+                
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-            
+                
                 const files = await response.json();
 
-                // Фильтруем только изображения
                 const images = files.filter(file => 
                     /\.(jpe?g|png|gif|webp)$/i.test(file.name)
                 );
 
                 if (images.length === 0) {
-                    gallery.innerHTML = '<p style="text-align:center;color:#888;">Нет загруженных изображений</p>';
+                    container.innerHTML = '<p style="text-align:center;color:#888;grid-column:1/-1;">Нет загруженных изображений</p>';
                     return;
                 }
 
-                gallery.innerHTML = '';
+                // Сортируем по имени
+                images.sort((a, b) => a.name.localeCompare(b.name));
 
-            images.sort((a, b) => a.name.localeCompare(b.name));
-            
-            images.forEach(file => {
-                // Создаём ТОЧНО такой же элемент как статические
-                const galleryItem = document.createElement('div');
-                galleryItem.className = 'gallery-item';
+                // Очищаем контейнер (на случай повторного вызова)
+                container.innerHTML = '';
 
-                const img = document.createElement('img');
-                img.src = file.download_url;
-                img.alt = file.name;
-                img.loading = 'lazy';
+                images.forEach(file => {
+                    // Используем ТЕ ЖЕ классы, что у статических фото
+                    const photoDiv = document.createElement('div');
+                    photoDiv.className = 'extra-photo';
 
-                // Подпись из имени файла без расширения
-                const caption = document.createElement('p');
-                caption.textContent = file.name.replace(/\.[^/.]+$/, '');
+                    const img = document.createElement('img');
+                    img.src = file.download_url;
+                    img.alt = file.name;
+                    img.loading = 'lazy';
 
-                galleryItem.appendChild(img);
-                galleryItem.appendChild(caption);
-                gallery.appendChild(galleryItem);
-            });
+                    const caption = document.createElement('p');
+                    // Форматируем имя файла
+                    caption.textContent = file.name
+                        .replace(/\.[^/.]+$/, '')  // убираем расширение
+                        .replace(/[-_]/g, ' ')     // заменяем дефисы/подчёркивания на пробелы
+                        .replace(/\d{6}/g, '')     // убираем 6 цифр подряд (даты)
+                        .trim();
 
-                console.log(`Загружено ${images.length} изображений из GitHub`);
+                    photoDiv.appendChild(img);
+                    photoDiv.appendChild(caption);
+                    container.appendChild(photoDiv);
+                });
+
+                console.log(`✅ Загружено ${images.length} изображений из GitHub`);
                 
             } catch (error) {
                 console.error('Ошибка загрузки галереи:', error);
-                gallery.innerHTML = `
-                    <p style="text-align:center;color:#c0392b;">
-                        ⚠️ Не удалось загрузить галерею<br>
-                        <small>${error.message}</small>
-                    </p>`;
+                container.innerHTML = `
+                    <div class="extra-photo" style="grid-column: 1 / -1; text-align: center;">
+                        <img src="https://via.placeholder.com/250x200?text=Error" alt="Ошибка" style="opacity: 0.5; height: 150px; object-fit: contain;">
+                        <p style="color: #c0392b;">⚠️ Не удалось загрузить изображения<br><small>${error.message}</small></p>
+                    </div>`;
             }
         })();
-
     </script>
 </body>
 </html>
