@@ -660,11 +660,6 @@
                         <img src="photos/photo3.png" alt="Игровой процесс 3">
                     </div>
                 </div>
-
-
-
-
-
                 <!-- Expand Button -->
                 <button class="expand-btn" onclick="toggleGallery()">
                     <span>+</span>
@@ -693,8 +688,13 @@
                                 <img src="photos/photo7.png" alt="Дополнительный скриншот 4" onerror="this.src='https://via.placeholder.com/300x200?text=Photo+7'">
                                 <p>???</p>
                             </div>
+                            
+                            <div id="dynamic-gallery" class="extra-photos" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+                                <!-- Сюда загрузятся фото из GitHub -->
+                            </div>
                         </div>
                     </div>
+
 
                     <!-- Video Section -->
                     <div class="media-section">
@@ -902,141 +902,170 @@
             </div>
         </div>
     </footer>
-
+    
     <script>
-        // Gallery Toggle Function
+    // ==========================================
+    // 1. GALLERY TOGGLE
+    // ==========================================
         function toggleGallery() {
             const expandedContent = document.getElementById('expandedContent');
             const expandBtn = document.querySelector('.expand-btn span:last-child');
             const plusIcon = document.querySelector('.expand-btn span:first-child');
-            
+        
             expandedContent.classList.toggle('show');
-            
+        
             if (expandedContent.classList.contains('show')) {
                 expandBtn.textContent = 'Скрыть дополнительный контент';
                 plusIcon.textContent = '−';
-                plusIcon.style.transform = 'rotate(0deg)';
             } else {
                 expandBtn.textContent = 'Показать больше контента';
                 plusIcon.textContent = '+';
-                plusIcon.style.transform = 'rotate(0deg)';
             }
         }
 
-        // Video Play Function
+    // ==========================================
+    // 2. VIDEO PLAY
+    // ==========================================
         function playVideo(videoId) {
             window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
         }
 
-        // FAQ Toggle Function
+    // ==========================================
+    // 3. FAQ TOGGLE
+    // ==========================================
         function toggleFAQ(element) {
             const answer = element.nextElementSibling;
             const icon = element.querySelector('span');
-            
+        
             if (answer.classList.contains('active')) {
                 answer.classList.remove('active');
                 icon.textContent = '+';
             } else {
                 answer.classList.add('active');
-                icon.textContent = '-';
+                icon.textContent = '−';
             }
         }
 
-        // Smooth scrolling for navigation links
+    // ==========================================
+    // 4. SMOOTH SCROLLING
+    // ==========================================
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
 
-        // Fallback images handling
+    // ==========================================
+    // 5. FALLBACK IMAGES (для обычных img)
+    // ==========================================
         document.querySelectorAll('img').forEach(img => {
-            img.onerror = function() {
+            img.addEventListener('error', function() {
+                // Не трогаем изображения из галереи GitHub
+                if (this.closest('#dynamic-gallery')) return;
                 this.src = 'https://via.placeholder.com/300x200?text=Image+Not+Found';
-            };
+            });
         });
 
-        // Modal Functions
+    // ==========================================
+    // 6. MODAL (Системные требования)
+    // ==========================================
         function showSystemSpecs() {
             document.getElementById('systemModal').style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Prevent scrolling
+            document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
             document.getElementById('systemModal').style.display = 'none';
-            document.body.style.overflow = 'auto'; // Enable scrolling
+            document.body.style.overflow = 'auto';
         }
 
-        // Close modal when clicking outside
-        window.onclick = function(event) {
+        // Закрытие по клику вне окна
+        window.addEventListener('click', function(event) {
             const modal = document.getElementById('systemModal');
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
-
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeModal();
-            }
+            if (event.target === modal) closeModal();
         });
 
+    // Закрытие по Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') closeModal();
+        });
 
-        // Настройки
-        const username = 'vaystar1324'; 
-        const repo = 'Godo-Logia';
-        const folderPath = 'docs/photos'; // Путь с учетом папки docs
-        async function loadGallery() {
-            const gallery = document.getElementById('gallery');
+    // ==========================================
+    // 7. DYNAMIC GALLERY (Загрузка из GitHub)
+    // ==========================================
+        (async function loadGallery() {
+            const gallery = document.getElementById('dynamic-gallery');
+        
+            // Если контейнера нет — выходим без ошибки
+            if (!gallery) {
+                console.warn('Контейнер #dynamic-gallery не найден. Пропускаем загрузку.');
+                return;
+            }
+
+            const username = 'vaystar1324';
+            const repo = 'Godo-Logia';
+            const folderPath = 'docs/photos';
             const url = `https://api.github.com/repos/${username}/${repo}/contents/${folderPath}`;
 
             try {
                 const response = await fetch(url);
+            
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+            
                 const files = await response.json();
 
+                // Фильтруем только изображения
                 const images = files.filter(file => 
-                    file.name.match(/\.(jpe?g|png|gif|webp)$/i)
+                    /\.(jpe?g|png|gif|webp)$/i.test(file.name)
                 );
 
-                    // Очищаем галерею перед загрузкой (на всякий случай)
+                if (images.length === 0) {
+                    gallery.innerHTML = '<p style="text-align:center;color:#888;">Нет загруженных изображений</p>';
+                    return;
+                }
+
                 gallery.innerHTML = '';
 
-                images.forEach(img => {
-                    // 1. Создаем контейнер для фото и подписи
+                images.forEach(file => {
                     const card = document.createElement('div');
                     card.className = 'photo-card';
 
-                    // 2. Создаем само изображение
-                    const imgElement = document.createElement('img');
-                    imgElement.src = img.download_url;
-                    imgElement.alt = img.name;
+                    const img = document.createElement('img');
+                    img.src = file.download_url;
+                    img.alt = file.name;
+                    img.loading = 'lazy'; // Ленивая загрузка
 
-                    // 3. Создаем подпись (берем имя файла и убираем расширение)
+                    // Свой fallback для изображений галереи
+                    img.addEventListener('error', function() {
+                        this.src = 'https://via.placeholder.com/300x200?text=Load+Error';
+                    });
+
                     const caption = document.createElement('p');
                     caption.className = 'photo-caption';
-                    caption.innerText = img.name.replace(/\.[^/.]+$/, ""); // Убирает .jpg, .png и т.д.
+                    caption.textContent = file.name.replace(/\.[^/.]+$/, '');
 
-                    // 4. Собираем всё вместе
-                    card.appendChild(imgElement);
+                    card.appendChild(img);
                     card.appendChild(caption);
                     gallery.appendChild(card);
                 });
+
+                console.log(`Загружено ${images.length} изображений из GitHub`);
+                
             } catch (error) {
-                console.error('Ошибка загрузки:', error);
+                console.error('Ошибка загрузки галереи:', error);
+                gallery.innerHTML = `
+                    <p style="text-align:center;color:#c0392b;">
+                        ⚠️ Не удалось загрузить галерею<br>
+                        <small>${error.message}</small>
+                    </p>`;
             }
-        }
-
-        loadGallery();
-
-
+        })();
 
     </script>
 </body>
